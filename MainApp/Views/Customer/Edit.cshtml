@@ -1,0 +1,19 @@
+﻿@using InvoiceTracker.Entities;
+@model InvoiceTracker.Entities.Customer;
+
+
+
+@{
+    ViewData["Title"] = "Edit a Customer";
+}
+@{
+    var partialViewData = new ViewDataDictionary<Customer>(ViewData)
+            {
+                Model = Model,
+                ["Title"] = "Edit",
+                ["Action"] = "EditCustomerRequestProcess",
+                ["id"] = Model.CustomerId,
+
+            };
+}
+@await Html.PartialAsync("_CustomerForm", partialViewData)

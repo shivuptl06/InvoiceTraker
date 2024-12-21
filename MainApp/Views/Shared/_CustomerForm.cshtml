@@ -1,0 +1,141 @@
+﻿@model InvoiceTracker.Entities.Customer;
+
+
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+    <form asp-action="@ViewData["Action"]" asp-route-range="@ViewBag.CurrentRange" asp-route-id="@ViewData["id"]" asp-controller="Customer" method="post" enctype="application/x-www-form-urlencoded">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="mb-3 row">
+            <label asp-for="@Model.CustomerName" class="col-sm-2 col-form-label">Name:</label>
+            <div class="col-sm-5">
+                <input type="text" asp-for="@Model.CustomerName" class="form-control @(ViewData.ModelState["CustomerName"]?.Errors.Count >0 ? "input-error":"")" />
+            </div>
+            <div class="col-sm-5">
+                <span asp-validation-for="@Model.CustomerName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="@Model.Address1" class="col-sm-2 col-form-label">Address 1:</label>
+            <div class="col-sm-5">
+                <input type="text" asp-for="@Model.Address1" class="form-control @(ViewData.ModelState["Address1"]?.Errors.Count >0 ? "input-error":"")" />
+            </div>
+            <div class="col-sm-5">
+                <span asp-validation-for="@Model.Address1" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="@Model.Address2" class="col-sm-2 col-form-label">Address 2:</label>
+            <div class="col-sm-5">
+                <input type="text" asp-for="@Model.Address2" class="form-control " />
+            </div>
+
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="@Model.City" class="col-sm-2 col-form-label">City:</label>
+            <div class="col-sm-5">
+                <input type="text" asp-for="@Model.City" class="form-control @(ViewData.ModelState["City"]?.Errors.Count >0 ? "input-error":"")" />
+            </div>
+            <div class="col-sm-5">
+                <span asp-validation-for="@Model.City" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="@Model.ProvinceOrState" class="col-sm-2 col-form-label">Province/State:</label>
+            <div class="col-sm-5">
+                <input type="text" asp-for="@Model.ProvinceOrState" class="form-control @(ViewData.ModelState["ProvinceOrState"]?.Errors.Count >0 ? "input-error":"")" />
+            </div>
+            <div class="col-sm-5">
+                <span asp-validation-for="@Model.ProvinceOrState" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="@Model.ZipOrPostalCode" class="col-sm-2 col-form-label">Zip/Postal code:</label>
+            <div class="col-sm-5">
+                <input type="text" asp-for="@Model.ZipOrPostalCode" class="form-control @(ViewData.ModelState["ZipOrPostalCode"]?.Errors.Count >0 ? "input-error":"")" />
+            </div>
+            <div class="col-sm-5">
+                <span asp-validation-for="@Model.ZipOrPostalCode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="@Model.Phone" class="col-sm-2 col-form-label">Phone:</label>
+            <div class="col-sm-5">
+                <input type="text" asp-for="@Model.Phone" class="form-control @(ViewData.ModelState["Phone"]?.Errors.Count >0 ? "input-error":"")" />
+            </div>
+            <div class="col-sm-5">
+                <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="@Model.ContactFirstName" class="col-sm-2 col-form-label">Contact first name:</label>
+            <div class="col-sm-5">
+                <input type="text" asp-for="@Model.ContactFirstName" class="form-control" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="@Model.ContactLastName" class="col-sm-2 col-form-label">Contact last name:</label>
+            <div class="col-sm-5">
+                <input type="text" asp-for="@Model.ContactLastName" class="form-control" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="@Model.ContactEmail" class="col-sm-2 col-form-label">Contact email:</label>
+            <div class="col-sm-5">
+                <input type="text" asp-for="@Model.ContactEmail" class="form-control @(ViewData.ModelState["ContactEmail"]?.Errors.Count >0 ? "input-error":"")" />
+            </div>
+            <div class="col-sm-5">
+                <span asp-validation-for="@Model.ContactEmail" class="text-danger"></span>
+            </div>
+
+        </div>
+        <input type="hidden" asp-for="CustomerId" value="@Model.CustomerId" />
+        <input type="hidden" asp-for="Invoices" value="@Model.Invoices" />
+        <input type="hidden" asp-for="IsDeleted" value="@Model.IsDeleted" />
+        <input type="submit" class="btn btn-info col-md-2" value="@ViewData["Title"]" />
+        <a asp-controller="Customer" asp-route-range="@ViewBag.CurrentRange" asp-action="GetCustDetailRange" class="btn btn-secondary col-md-2 ">Cancel</a>
+    </form>
+</div>
+@* 
+style for the box which appier  *@
+<style>
+   
+  
+    
+
+    /* Container styling */
+    .container {
+        margin-top: 20px;
+    }
+
+    /* Form styling */
+    form {
+        background: linear-gradient(to bottom, #FFFFFF, #E0E0E0);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Header styling */
+    h2 {
+        color: #007BFF;
+    }
+
+    /* Input field styling */
+    .form-control {
+        margin-bottom: 10px;
+    }
+
+    .input-error {
+        border: 2px solid Orange;
+        background-color: #F8D7DA;
+        color: #721C24;
+    }
+
+    /* Button styling */
+    .btn {
+        margin-right: 10px;
+    }
+
+    
+
+</style>

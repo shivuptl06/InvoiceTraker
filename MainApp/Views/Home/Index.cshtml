@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<<div class="text-center">
+    <h2>Hello and Welcome to Customer-Invoice Manager Application</h2>
+    <a asp-route-range="A-E" class="btn-outline-primary  text-center" asp-action="GetCustDetailRange" asp-controller="Customer">Vist Customer-Invoice App</a>
+</div>
+
+<style>
+    .text-center {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    
+    h2 {
+        color: black; 
+    }
+
+  
+    .btn-outline-primary {
+        border-color: purple; 
+        color: black; 
+        transition: all 0.3s ease;
+    }
+
+        .btn-outline-primary:hover {
+            background-color: purple; 
+            color: #FFFFFF; 
+        }
+</style>

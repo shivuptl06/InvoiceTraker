@@ -1,0 +1,186 @@
+﻿@model CInvoiceViewModel
+
+@{
+    ViewData["Title"] = $"Invoices for {Model.Customer.CustomerName}";
+}
+
+<div class="container">
+    <a asp-route-range="@ViewBag.CurrentRange" asp-controller="Customer" asp-action="GetCustDetailRange" class="text-info text-decoration-none float-end">Return to @ViewBag.CurrentRange customers</a>
+    <div class="col-md-6 float-sm-start">
+        <h2 class="">@ViewData["Title"]</h2>
+        <br />
+        <h5 class="text-muted">Address: @Model.Customer.Address1 @Model.Customer.City</h5>
+
+        <br />
+        <div>
+            <h3>Invoices</h3>
+            <table class="table table-bordered table-hover d-md-table-cell">
+                <thead class="table-info">
+                    <tr>
+                        <th>Invoice #</th>
+                        <th>Due Date</th>
+                        <th>Amount Paid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var invoiceData in Model.Invoices)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-controller="Customer" asp-action="InvoiceDetails" asp-route-customerId="@Model.Customer.CustomerId" asp-route-id="@invoiceData.InvoiceId" asp-route-range="@ViewBag.CurrentRange" class="text-info text-decoration-none">
+                                    @invoiceData.InvoiceId
+                                </a>
+                            </td>
+                            <td>@invoiceData.InvoiceDueDate?.ToShortDateString()</td>
+                            <td>@invoiceData.PaymentTotal</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <form asp-controller="Customer" asp-route-range="@ViewBag.CurrentRange" asp-action="AddInvoice" method="post">
+            <input type="hidden" name="customerId" value="@Model.Customer.CustomerId" />
+            <div class="form-group mb-3 row">
+                <label class="col-sm-2 col-form-label" for="date">Date:</label>
+                <div class="col-sm-5">
+                    <input type="date" class="form-control" id="invoiceDate" name="date" required />
+                </div>
+            </div>
+            <div class="form-group mb-3 row">
+                <label class="col-sm-2 col-form-label" for="paymentTerms">Payment Terms:</label>
+                <div class="col-sm-5">
+                    <select class="form-control" id="paymentTerms" name="paymentTerms" required>
+                        <option value="1">Net 10 days</option>
+                        <option value="2">Net 20 days</option>
+                        <option value="3">Net 30 days</option>
+                        <option value="4">Net 40 days</option>
+                        <option value="5">Net 50 days</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-info">Add Invoice</button>
+        </form>
+    </div>
+    <div class="col-md-6 float-sm-end">
+        @if (Model.selectedInvoice != null)
+        {
+            <br />
+            <br />
+
+            <p class="text-muted text-sm-end">Terms: @Model.selectedInvoice.PaymentTerms?.Description</p>
+
+            <br />
+            <br />
+            <br />
+            <h5>Line items for invoice # @Model.selectedInvoice.InvoiceId</h5>
+            <table class="table table-bordered">
+                <thead class="table-info">
+                    <tr>
+                        <th>Description</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.selectedInvoice.LineItems)
+                    {
+                        <tr>
+                            <td>@item.Description</td>
+                            <td>@item.Amount</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <h4>Total: $@Model.selectedInvoice.LineItems.Sum(item => item.Amount)</h4>
+            <br />
+            <br />
+
+            <div>
+                <form asp-controller="Customer" asp-route-customerId="@Model.Customer.CustomerId" asp-route-range="@ViewBag.CurrentRange" asp-action="AddLineItem" method="post">
+
+                    <input type="hidden" name="invoiceId" value="@Model.selectedInvoice.InvoiceId" />
+
+                    <div class="form-group mb-3 row">
+                        <label class="col-sm-2 col-form-label" for="description">Description:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="description" name="description" required />
+                        </div>
+                    </div>
+                    <div class="form-group mb-3 row">
+                        <label class="col-sm-2 col-form-label" for="amount">Amount:</label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" id="amount" name="amount" required />
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-info">Add Line Items</button>
+                </form>
+            </div>
+        }
+    </div>
+
+</div>
+
+<style>
+    /* Container styling */
+    .container {
+        margin-top: 50px;
+    }
+
+    /* Header styling */
+    h2 {
+        color: #4CAF50; 
+    }
+
+    h3 {
+        color: #4CAF50; 
+    }
+
+    h5.text-muted {
+        color: #757575; 
+    }
+
+    /* Table styling */
+    .table {
+        margin-top: 20px;
+    }
+
+    .table-success th {
+        background-color: #4CAF50;
+        color: #FFFFFF; 
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #F5F5F5; 
+    }
+
+    /* Form styling */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-success {
+        background-color: #8BC34A; 
+        border-color: #8BC34A; 
+    }
+
+        .btn-success:hover {
+            background-color: #689F38;
+            border-color: #689F38; 
+
+   
+    .form-group.row {
+        margin-bottom: 20px;
+    }
+
+   
+    .text-muted.text-sm-end {
+        margin-top: 20px;
+    }
+
+    /
+    .br-3x {
+        margin-bottom: 60px;
+    }
+</style>
+

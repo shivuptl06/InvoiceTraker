@@ -1,0 +1,138 @@
+﻿@model List<InvoiceTracker.Entities.Customer>
+
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<div class="container">
+    <h2>@ViewBag.CurrentRange customers</h2>
+    <a asp-action="AddCustomerRequest" asp-route-range="@ViewBag.CurrentRange" asp-controller="Customer" class="btn btn-secondary col-md-2 ">Add a new Customer</a>
+    <div asp-validation-summary="All"></div>
+    <form asp-route-id="@ViewBag.deletedCustId" asp-action="DeleteCustomerRequestProcess" asp-controller="Customer" method="post" enctype="application/x-www-form-urlencoded">
+        <div id="UndoMessage">
+            @if (TempData["UndoMessage"] != null)
+            {
+                <strong><span class="alert alert-warning">@Html.Raw(@TempData["UndoMessage"] as string)<button type="submit" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></span></strong>
+                <br />
+                <br />
+            }
+        </div>
+    </form>
+    <div>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Home</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customerData in Model)
+                {
+                    @if (customerData == null)
+                    {
+                        <tr class="tr">
+                            <td rowspan="3">No Customer Data Available</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr class="tr">
+                            <td>@customerData.CustomerName</td>
+                            <td>@customerData.Address2  @customerData.City</td>
+                            <td>
+                                <a asp-action="CustomerInvoices" asp-route-id="@customerData.CustomerId" asp-route-range="@ViewBag.CurrentRange" asp-controller="Customer" class="link">Invoice</a> |
+                                <a asp-action="EditCustomerById" asp-route-range="@ViewBag.CurrentRange" asp-route-id="@customerData.CustomerId" asp-controller="Customer" class="link ">Edit</a> |
+                                <a asp-route-id="@customerData.CustomerId" asp-action="SoftDeleteCustomerRequestProcess" asp-route-range="@ViewBag.CurrentRange" asp-controller="Customer" class="link">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <form asp-action="GetCoustomerDeatilsByRange" asp-controller="Customer" method="get">
+            <div@*  class="btn-group" role="group" aria-label="radio toggle button group" style="box-shadow:5px 5px #212529; border:2px solid #212529 !important; transition: all ease-in 0.2s !important; border-radius:10px;" *@>
+                <button type="submit" asp-route-range="A-E" name="range" value="A-E" class="btn btn-outline-dark @(ViewBag.CurrentRange == "A-E" ? "active":"")">A-E</button>
+                <button type="submit" asp-route-range="F-K" name="range" value="F-K" class="btn btn-outline-dark @(ViewBag.CurrentRange == "F-K" ? "active":"")">F-K</button>
+                <button type="submit" asp-route-range="L-R" name="range" value="L-R" class="btn btn-outline-dark @(ViewBag.CurrentRange == "L-R" ? "active":"")">L-R</button>
+                <button type="submit" asp-route-range="S-Z" name="range" value="S-Z" class="btn btn-outline-dark @(ViewBag.CurrentRange == "S-Z" ? "active":"")">S-Z</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style> 
+    /* Container styling */
+    .container {
+        margin-top: 20px;
+    }
+
+    /* Header styling */
+    h2 {
+        color: black;
+    }
+
+  
+    a.text-info {
+        color: mediumvioletred; 
+        text-decoration: none;
+    }
+
+
+    .alert-warning {
+        background-color: #FFE5D0; 
+        color: #856404; 
+    }
+
+ 
+    .table {
+        background-color: #FFFFFF;
+    }
+
+    
+    .table-dark th {
+        background-color: #007BFF; 
+        color: #FFFFFF;
+    }
+
+   
+    .tr td {
+        border-bottom: 1px solid #DEE2E6; 
+    }
+
+    
+    .link,
+    {
+        color: purple; 
+        margin-right: 5px;
+        text-decoration: none;
+    }
+
+    form {
+        background: linear-gradient(to bottom, #FFFFFF, #E0E0E0);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+   
+
+
+    .btn-group button {
+        background-color: #F8F9FA;
+        color: #212529;
+        border: 1px solid #CED4DA; 
+        border-radius: 5px; 
+        margin-right: 5px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-group button:hover {
+            background-color: #007BFF; 
+            color: #FFFFFF; 
+        }
+
+   
+
+
+</style>

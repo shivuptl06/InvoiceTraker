@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "G+0q0APi7ezMdThbruJAEV2qzDht5t6sQojBOQOYmJTP0rvJ7plxxnUCfbO9JfmpCQcKpwltN6hwXCsbv4Zk/Q==",
+  "success": true,
+  "projectFilePath": "E:\\Web MVC Assignment 3\\Web MVC Assignment 3\\TescasesXunit\\TescasesXunit.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\shivu\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
+    "C:\\Users\\shivu\\.nuget\\packages\\coverlet.collector\\3.2.0\\coverlet.collector.3.2.0.nupkg.sha512",
+    "C:\\Users\\shivu\\.nuget\\packages\\moq\\4.20.70\\moq.4.20.70.nupkg.sha512",
+    "C:\\Users\\shivu\\.nuget\\packages\\system.diagnostics.eventlog\\6.0.0\\system.diagnostics.eventlog.6.0.0.nupkg.sha512",
+    "C:\\Users\\shivu\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.5\\xunit.runner.visualstudio.2.4.5.nupkg.sha512"
+  ],
+  "logs": []
+}
